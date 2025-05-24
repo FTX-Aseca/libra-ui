@@ -1,0 +1,25 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    prefer_final_fields: true # Make fields final if they’re never reassigned.
+    prefer_final_locals: true # Make local variables final if they’re never reassigned.
+
+    avoid_print: false
+    avoid_returning_null_for_void: true # Don’t return null from a void function.
+    unnecessary_null_comparison: true # Flags `== null` on a non‐nullable type.
+    unnecessary_this: true # Warns when `this.` is used redundantly.
+    prefer_trailing_commas: true # Makes auto‐formatting produce more readable diffs.
+
+    always_declare_return_types: true # Explicit return types on all functions.
+    avoid_positional_boolean_parameters: # Use named parameters for clarity when bool flags are passed.
+      -  # no needs—just enabling makes you use `onPressed: ()` vs. `onPressed: true`.
+
+    avoid_redundant_argument_values: true # Flags passing the default value to a parameter.
+    use_key_in_widget_constructors: true # Encourage widget constructors to take a `Key? key`.
+
+    unused_element: true # Flags unused private members and top‐level functions.
+    avoid_unused_constructor_parameters: true # Catches when you declare a parameter you never use.
