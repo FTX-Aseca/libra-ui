@@ -83,9 +83,8 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
   }
 
-  TextEditingController? getController(String fieldName) {
-    return _controllers[fieldName];
-  }
+  TextEditingController? getController(String fieldName) =>
+      _controllers[fieldName];
 
   void _submitForm() {
     if (widget.formKey.currentState!.validate()) {

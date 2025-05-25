@@ -28,10 +28,11 @@ class AuthDatasourceImpl implements AuthDatasource {
     required String email,
     required String password,
   }) async {
-    final response = await _dio.post(
+    // We only need to perform the register, not get the data.
+    await _dio.post(
       '/auth/register',
       data: {'email': email, 'password': password},
     );
-    return AuthData.fromJson(response.data);
+    return AuthData.empty();
   }
 }

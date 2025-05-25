@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
+import 'package:libra_ui/presentation/providers/auth/auth_message_provider.dart';
 import 'package:libra_ui/presentation/widgets/auth/auth_form.dart';
 // TODO: Import a shared button widget if available, or create one.
 
@@ -17,6 +18,22 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Use WidgetsBinding to show SnackBar after the build phase.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authMessage = ref.read(authMessageProvider);
+      if (authMessage != null && mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(authMessage)));
+        // Clear the message after displaying it
+        ref.read(authMessageProvider.notifier).state = null;
+      }
+    });
+  }
 
   // Controllers are now managed by AuthForm, but you might need to access them
   // via a GlobalKey if direct access to AuthFormState is required for specific scenarios.

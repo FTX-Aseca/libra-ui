@@ -5,7 +5,6 @@ import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 import 'package:libra_ui/presentation/widgets/auth/auth_form.dart';
-// TODO: Import a shared button widget if available, or create one.
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
