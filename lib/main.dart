@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:libra_ui/config/constants/environment.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Environment.load();
+
   runApp(const MainApp());
 }
 
