@@ -85,11 +85,7 @@ class BalanceCard extends StatelessWidget {
   }
 }
 
-Widget cardActionButton(
-  IconData icon,
-  String label, {
-  bool isPrimary = false,
-}) {
+Widget cardActionButton(IconData icon, String label, {bool isPrimary = false}) {
   // Wrap with Flexible or Expanded if text can overflow in the Row
   return Flexible(
     child: Column(
