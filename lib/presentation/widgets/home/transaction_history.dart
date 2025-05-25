@@ -11,7 +11,7 @@ class TransactionHistory extends StatelessWidget {
     required this.primaryTextColor,
     required this.secondaryTextColor,
   });
-  final List<Map<String, dynamic>> activities;
+  final List<Activity> activities;
   final Color cardBackgroundColor;
   final Color accentColorTeal;
   final Color primaryTextColor;
@@ -46,7 +46,7 @@ class _TransactionTile extends StatelessWidget {
   });
 
   final Color cardBackgroundColor;
-  final Map<String, dynamic> activity;
+  final Activity activity;
   final Color accentColorTeal;
   final Color primaryTextColor;
   final Color secondaryTextColor;
@@ -55,20 +55,15 @@ class _TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        // ignore: deprecated_member_use
-        backgroundColor: cardBackgroundColor.withOpacity(0.9),
-        child: Icon(
-          activity['icon'] as IconData,
-          color: accentColorTeal,
-          size: 20,
-        ),
+        backgroundColor: cardBackgroundColor.withValues(alpha: 0.9),
+        child: Icon(activity.icon, color: accentColorTeal, size: 20),
       ),
       title: Text(
-        activity['name'] as String,
+        activity.name,
         style: TextStyle(color: primaryTextColor, fontWeight: FontWeight.w600),
       ),
       subtitle: Text(
-        activity['type'] as String,
+        activity.type,
         style: TextStyle(color: secondaryTextColor, fontSize: 12),
       ),
       trailing: Column(
@@ -76,7 +71,7 @@ class _TransactionTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            activity['amount'] as String,
+            activity.amount,
             style: TextStyle(
               color: primaryTextColor,
               fontWeight: FontWeight.w600,
@@ -85,7 +80,7 @@ class _TransactionTile extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            activity['date'] as String,
+            activity.date,
             style: TextStyle(color: secondaryTextColor, fontSize: 10),
           ),
         ],
