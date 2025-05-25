@@ -178,7 +178,7 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   List<Widget> _buildFormFields() {
-    List<Widget> formFields = [];
+    final List<Widget> formFields = [];
     for (int i = 0; i < widget.fieldConfigs.length; i++) {
       final config = widget.fieldConfigs[i];
       final controller = _controllers[config.fieldName]!;
@@ -206,7 +206,7 @@ class _AuthFormState extends State<AuthForm> {
               return config.validator!(value);
             }
             // 2. Default validation
-            String? defaultValidation = _getDefaultValidator(
+            final String? defaultValidation = _getDefaultValidator(
               config.type,
               value,
               config.labelText,

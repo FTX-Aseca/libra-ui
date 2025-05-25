@@ -7,3 +7,11 @@ if [ $STATUS -ne 0 ]; then
   echo "🚫 dart format failed. Aborting commit."
   exit $STATUS
 fi
+
+echo "⚙️ Running lints..."
+flutter analyze .
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  echo "🚫 flutter analyze failed. Aborting commit."
+  exit $STATUS
+fi

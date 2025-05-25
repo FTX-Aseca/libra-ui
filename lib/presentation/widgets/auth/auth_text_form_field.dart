@@ -37,7 +37,9 @@ class AuthTextFormField extends StatelessWidget {
         hintText: hintText,
         prefixIcon: Icon(prefixIconData, color: LibraColors.accentTeal),
         labelStyle: const TextStyle(color: LibraColors.secondaryText),
-        hintStyle: TextStyle(color: LibraColors.secondaryText.withOpacity(0.5)),
+        hintStyle: TextStyle(
+          color: LibraColors.secondaryText.withValues(alpha: 0.5),
+        ),
         filled: true,
         fillColor: LibraColors.cardBackground,
         border: OutlineInputBorder(
@@ -47,7 +49,7 @@ class AuthTextFormField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: LibraColors.secondaryText.withOpacity(0.3),
+            color: LibraColors.secondaryText.withValues(alpha: 0.3),
           ),
         ),
         focusedBorder: OutlineInputBorder(
@@ -56,7 +58,7 @@ class AuthTextFormField extends StatelessWidget {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: const BorderSide(color: Colors.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

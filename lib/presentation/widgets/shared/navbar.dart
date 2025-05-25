@@ -17,10 +17,8 @@ class NavBar extends StatelessWidget {
     return BottomNavigationBar(
       backgroundColor: cardBackgroundColor,
       selectedItemColor: accentColorTeal,
-      unselectedItemColor: secondaryTextColor.withOpacity(0.7),
+      unselectedItemColor: secondaryTextColor.withValues(alpha: 0.7),
       type: BottomNavigationBarType.fixed,
-      currentIndex: 0,
-      iconSize: 24,
       selectedLabelStyle: const TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.w600,
