@@ -1,1 +1,3 @@
-class Constants {}
+class Constants {
+  static const String emptyString = '';
+}
