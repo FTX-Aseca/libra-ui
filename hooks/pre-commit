@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "⚙️ Formatting code with dart format..."
+dart format .
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  echo "🚫 dart format failed. Aborting commit."
+  exit $STATUS
+fi

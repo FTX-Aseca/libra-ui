@@ -1,3 +1,1 @@
-abstract class UserDatasource{
-  
-}
+abstract class UserDatasource {}

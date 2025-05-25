@@ -94,3 +94,12 @@ Para obtener una copia local y ponerla en funcionamiento, sigue estos sencillos 
 ---
 
 ¡Bienvenido a Libra UI! Para más detalles sobre los servicios de backend, consulta la [documentación del repositorio de Libra Wallet](https://github.com/FTX-Aseca/libra-wallet/).
+
+> Notas para devs:
+
+> Muevan los git hooks usando el script `install-git-hooks.sh`, o a mano en caso de no estar en un sistema basado en Unix.
+
+> Seteen el `commit_message` usando el siguiente comando:
+```bash
+git config commit.template .gitmessage
+```
