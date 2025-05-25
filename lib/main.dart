@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/constants/environment.dart';
 import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/theme.dart';
@@ -7,18 +8,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Environment.load();
 
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appRouter = ref.watch(routerProvider);
+
     return MaterialApp.router(
       title: 'Libra UI',
       theme: AppTheme.theme,
-      routerConfig: router,
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
     );
   }
