@@ -22,7 +22,7 @@ class AuthNotifier extends StateNotifier<AuthData> {
       email: email,
       password: password,
     );
-    state = authData;
+    state = state.copyWith(token: authData.token);
   }
 
   Future<void> register({

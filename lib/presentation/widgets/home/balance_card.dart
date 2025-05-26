@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
+import 'package:libra_ui/presentation/providers/account/balance_provider.dart';
 
-class BalanceCard extends StatelessWidget {
+class BalanceCard extends ConsumerWidget {
   const BalanceCard({super.key, required this.actionCards});
 
   final List<Widget> actionCards;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final balanceAsync = ref.watch(balanceProvider);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
       padding: const EdgeInsets.all(20.0),
@@ -36,7 +39,7 @@ class BalanceCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'AstroPay',
+                'Welcome, user!',
                 style: TextStyle(
                   color: LibraColors.primaryText,
                   fontSize: 20,
@@ -57,12 +60,27 @@ class BalanceCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          const Text(
-            'R\$ 4.660,00',
-            style: TextStyle(
-              color: LibraColors.primaryText,
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
+          balanceAsync.when(
+            data: (value) => Text(
+              'U\$D $value',
+              style: const TextStyle(
+                color: LibraColors.primaryText,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            loading: () => const SizedBox(
+              height: 32,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: LibraColors.accentTeal,
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+            error: (err, stack) => const Text(
+              'Error fetching balance',
+              style: TextStyle(color: Colors.red, fontSize: 16),
             ),
           ),
           const SizedBox(height: 8),
@@ -83,45 +101,4 @@ class BalanceCard extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget cardActionButton(IconData icon, String label, {bool isPrimary = false}) {
-  // Wrap with Flexible or Expanded if text can overflow in the Row
-  return Flexible(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10), // Slightly larger padding
-          decoration: BoxDecoration(
-            color: isPrimary
-                ? LibraColors.accentTeal.withValues(alpha: 0.15)
-                : Colors.black.withValues(alpha: 0.25),
-            shape: BoxShape.circle,
-            border: isPrimary
-                ? Border.all(color: LibraColors.accentTeal)
-                : null,
-          ),
-          child: Icon(
-            icon,
-            color: isPrimary
-                ? LibraColors.accentTeal
-                : LibraColors.primaryText.withValues(alpha: 0.8),
-            size: 22,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: LibraColors.secondaryText,
-            fontSize: 10,
-          ),
-          overflow: TextOverflow.ellipsis, // Handle long text
-          maxLines: 2, // Allow up to two lines for label
-        ),
-      ],
-    ),
-  );
 }
