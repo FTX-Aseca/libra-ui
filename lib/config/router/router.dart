@@ -14,11 +14,6 @@ class AppRoutes {
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authRepositoryProvider);
-
-  // A simple check for authentication.
-  // Adjust this based on your actual AuthData model.
-  // For example, if AuthData.empty() means not authenticated.
-  // Or if there's an 'isAuthenticated' flag or a non-null user/token.
   final isAuthenticated = authState.token.isNotEmpty;
 
   return GoRouter(
