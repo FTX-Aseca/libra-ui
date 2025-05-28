@@ -16,12 +16,16 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int currentIndex = 0;
+  late Future<List<Transaction>> _transactionsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _transactionsFuture = ref.read(accountProvider.notifier).getTransactions();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final accountData = ref.watch(accountProvider.notifier);
-    final transactionsFuture = accountData.getTransactions();
-
     return Scaffold(
       backgroundColor: LibraColors.scaffoldBackground,
       body: SafeArea(
@@ -73,7 +77,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             const SizedBox(height: 8),
             FutureBuilder(
-              future: transactionsFuture,
+              future: _transactionsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -88,11 +92,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       'Error: ${snapshot.error}',
                       style: const TextStyle(color: Colors.red),
                     ),
-                  ); 
+                  );
                 }
 
                 print('loading transactions: ${snapshot.data}');
-                return Expanded(child: _buildActivityList(snapshot.data ?? []));
+                return Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      setState(() {
+                        _transactionsFuture = ref
+                            .read(accountProvider.notifier)
+                            .getTransactions();
+                      });
+                      await _transactionsFuture;
+                    },
+                    child: _buildActivityList(snapshot.data ?? []),
+                  ),
+                );
               },
             ),
           ],

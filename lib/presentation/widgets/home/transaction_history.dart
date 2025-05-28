@@ -60,6 +60,8 @@ class _TransactionTile extends StatelessWidget {
         ? Icons.arrow_upward
         : Icons.arrow_downward;
 
+    final transactionType = transaction.transactionType == 'INCOME' ? '+' : '-';
+    final amount = '${transactionType}U\$D ${transaction.amount}';
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: cardBackgroundColor.withValues(alpha: 0.9),
@@ -78,7 +80,7 @@ class _TransactionTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            transaction.amount.toString(),
+            amount,
             style: TextStyle(
               color: primaryTextColor,
               fontWeight: FontWeight.w600,
@@ -87,7 +89,7 @@ class _TransactionTile extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            transaction.date?.toString() ?? 'No date',
+            transaction.formattedDate,
             style: TextStyle(color: secondaryTextColor, fontSize: 10),
           ),
         ],
