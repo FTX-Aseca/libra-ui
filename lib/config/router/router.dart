@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
+import 'package:libra_ui/presentation/screens/account/settings_screen.dart';
 import 'package:libra_ui/presentation/screens/account/transaction_history_screen.dart';
+import 'package:libra_ui/presentation/screens/account/transfer_screen.dart';
 import 'package:libra_ui/presentation/screens/screens.dart';
 import 'package:libra_ui/presentation/screens/auth/login_screen.dart';
 import 'package:libra_ui/presentation/screens/auth/register_screen.dart';
@@ -12,6 +14,8 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String transactions = '/transactions';
+  static const String settings = '/settings';
+  static const String transfer = '/transfer';
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -41,6 +45,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.transactions,
         name: AppRoutes.transactions,
         builder: (context, state) => const TransactionsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.transfer,
+        name: AppRoutes.transfer,
+        builder: (context, state) => const TransferScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        name: AppRoutes.settings,
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
     redirect: (context, state) {

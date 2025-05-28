@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 import 'package:libra_ui/presentation/widgets/home/transaction_history.dart';
+import 'package:libra_ui/presentation/widgets/shared/navbar.dart';
 
 class TransactionsScreen extends ConsumerWidget {
   const TransactionsScreen({super.key});
@@ -31,6 +32,7 @@ class TransactionsScreen extends ConsumerWidget {
           ],
         ),
       ),
+      bottomNavigationBar: NavBar.common(),
     );
   }
 }

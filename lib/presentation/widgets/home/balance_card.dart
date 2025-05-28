@@ -4,7 +4,7 @@ import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 
 class BalanceCard extends ConsumerWidget {
-  const BalanceCard({super.key, required this.actionCards});
+  const BalanceCard({super.key, this.actionCards = const <Widget>[]});
 
   final List<Widget> actionCards;
 
@@ -39,7 +39,7 @@ class BalanceCard extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Welcome, user!',
+                'Welcome, User!', // TODO: get user name from the backend
                 style: TextStyle(
                   color: LibraColors.primaryText,
                   fontSize: 20,
