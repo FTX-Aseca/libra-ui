@@ -1,32 +1,32 @@
 // This should represent the transaction history
 import 'package:flutter/material.dart';
-import 'package:libra_ui/domain/data/home/activity/activities.dart';
+import 'package:libra_ui/domain/models/account/transaction.dart';
 
 class TransactionHistory extends StatelessWidget {
   const TransactionHistory({
     super.key,
-    this.activities = fakeActivities,
     required this.cardBackgroundColor,
     required this.accentColorTeal,
     required this.primaryTextColor,
     required this.secondaryTextColor,
+    required this.transactions,
   });
-  final List<Activity> activities;
   final Color cardBackgroundColor;
   final Color accentColorTeal;
   final Color primaryTextColor;
   final Color secondaryTextColor;
+  final List<Transaction> transactions;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      itemCount: activities.length,
+      itemCount: transactions.length,
       itemBuilder: (context, index) {
-        final activity = activities[index];
+        final transaction = transactions[index];
         return _TransactionTile(
           cardBackgroundColor: cardBackgroundColor,
-          activity: activity,
+          transaction: transaction,
           accentColorTeal: accentColorTeal,
           primaryTextColor: primaryTextColor,
           secondaryTextColor: secondaryTextColor,
@@ -39,31 +39,38 @@ class TransactionHistory extends StatelessWidget {
 class _TransactionTile extends StatelessWidget {
   const _TransactionTile({
     required this.cardBackgroundColor,
-    required this.activity,
+    required this.transaction,
     required this.accentColorTeal,
     required this.primaryTextColor,
     required this.secondaryTextColor,
   });
 
   final Color cardBackgroundColor;
-  final Activity activity;
+  final Transaction transaction;
   final Color accentColorTeal;
   final Color primaryTextColor;
   final Color secondaryTextColor;
 
   @override
   Widget build(BuildContext context) {
+    final transactionName = transaction.transactionType == 'INCOME'
+        ? 'Received'
+        : 'Sent';
+    final icon = transaction.transactionType == 'INCOME'
+        ? Icons.arrow_upward
+        : Icons.arrow_downward;
+
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: cardBackgroundColor.withValues(alpha: 0.9),
-        child: Icon(activity.icon, color: accentColorTeal, size: 20),
+        child: Icon(icon, color: accentColorTeal, size: 20),
       ),
       title: Text(
-        activity.name,
+        transactionName,
         style: TextStyle(color: primaryTextColor, fontWeight: FontWeight.w600),
       ),
       subtitle: Text(
-        activity.type,
+        transaction.description ?? 'No description',
         style: TextStyle(color: secondaryTextColor, fontSize: 12),
       ),
       trailing: Column(
@@ -71,7 +78,7 @@ class _TransactionTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            activity.amount,
+            transaction.amount.toString(),
             style: TextStyle(
               color: primaryTextColor,
               fontWeight: FontWeight.w600,
@@ -80,7 +87,7 @@ class _TransactionTile extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            activity.date,
+            transaction.date?.toString() ?? 'No date',
             style: TextStyle(color: secondaryTextColor, fontSize: 10),
           ),
         ],
