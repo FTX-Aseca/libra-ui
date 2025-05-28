@@ -10,18 +10,22 @@ class TransactionHistory extends StatelessWidget {
     required this.primaryTextColor,
     required this.secondaryTextColor,
     required this.transactions,
+    this.limit = 10,
   });
   final Color cardBackgroundColor;
   final Color accentColorTeal;
   final Color primaryTextColor;
   final Color secondaryTextColor;
   final List<Transaction> transactions;
+  final int limit;
 
   @override
   Widget build(BuildContext context) {
+    if (limit == 0) return const SizedBox.shrink();
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      itemCount: transactions.length,
+      itemCount: limit,
       itemBuilder: (context, index) {
         final transaction = transactions[index];
         return _TransactionTile(

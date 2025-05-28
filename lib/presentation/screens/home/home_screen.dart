@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/domain/models/account/transaction.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
@@ -61,9 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      /* TODO: Handle 'All' press */
-                    },
+                    onPressed: () => context.pushNamed(AppRoutes.transactions),
                     child: const Text(
                       'All >',
                       style: TextStyle(
@@ -166,6 +166,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       primaryTextColor: LibraColors.primaryText,
       secondaryTextColor: LibraColors.secondaryText,
       transactions: transactions,
+      limit: transactions.length,
     );
   }
 
