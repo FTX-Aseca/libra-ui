@@ -9,7 +9,7 @@ class AccountDatasourceImpl extends AccountDatasource {
   final Dio _dio;
 
   AccountDatasourceImpl({required String token})
-    : _dio = DioBuilder.fromDomain('',token: token);
+    : _dio = DioBuilder.fromDomain('', token: token);
 
   @override
   Future<double> getBalance(int accountId) async {
