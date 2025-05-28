@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
-import 'package:libra_ui/presentation/screens/account/settings_screen.dart';
-import 'package:libra_ui/presentation/screens/account/transaction_history_screen.dart';
-import 'package:libra_ui/presentation/screens/account/transfer_screen.dart';
+import 'package:libra_ui/presentation/screens/account/settings/settings_screen.dart';
+import 'package:libra_ui/presentation/screens/account/transaction/transaction_history_screen.dart';
+import 'package:libra_ui/presentation/screens/account/transfer/transfer_screen.dart';
 import 'package:libra_ui/presentation/screens/screens.dart';
 import 'package:libra_ui/presentation/screens/auth/login_screen.dart';
 import 'package:libra_ui/presentation/screens/auth/register_screen.dart';

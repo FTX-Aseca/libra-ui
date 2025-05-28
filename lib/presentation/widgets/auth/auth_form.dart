@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/widgets/auth/auth_button.dart';
-import 'package:libra_ui/presentation/widgets/auth/auth_text_form_field.dart';
+import 'package:libra_ui/presentation/widgets/shared/libra_text_form_field.dart';
 
 enum FieldType { text, email, password }
 
@@ -188,7 +188,7 @@ class _AuthFormState extends State<AuthForm> {
           : null;
 
       formFields.add(
-        AuthTextFormField(
+        LibraTextFormField(
           controller: controller,
           labelText: config.labelText,
           hintText: config.placeholder,
