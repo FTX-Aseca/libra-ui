@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
-import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 
 class BalanceCard extends ConsumerWidget {
-  const BalanceCard({super.key, this.actionCards = const <Widget>[]});
+  const BalanceCard({
+    super.key,
+    this.actionCards = const <Widget>[],
+    required this.balance,
+  });
 
   final List<Widget> actionCards;
+  final AsyncValue<double> balance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final balance = ref.watch(balanceProvider);
     final authData = ref.watch(authRepositoryProvider);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0),

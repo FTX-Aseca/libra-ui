@@ -1,3 +1,4 @@
+import 'package:libra_ui/domain/models/account/external_transfer_response.dart';
 import 'package:libra_ui/domain/models/account/transaction.dart';
 import 'package:libra_ui/domain/models/account/transfer.dart';
 import 'package:libra_ui/domain/models/auth/auth_data.dart';
@@ -23,11 +24,20 @@ class AccountRepositoryImpl extends AccountRepository {
   }
 
   @override
-  Future<void> createExternalTransfer(ExternalTransfer transfer) async {
-    await _accountDatasource.createExternalTransfer(transfer);
-  }
+  Future<ExternalTransferResponse> createExternalTransfer(
+    ExternalTransfer transfer,
+  ) async => await _accountDatasource.createExternalTransfer(transfer);
 
   @override
   Future<AuthData> getAccountDetails(int accountId) async =>
       await _accountDatasource.getAccountDetails(accountId);
+
+  @override
+  Future<ExternalTransferResponse> confirmExternalTransfer(
+    int transferId,
+    OperationType operationType,
+  ) async => await _accountDatasource.confirmExternalTransfer(
+    transferId,
+    operationType,
+  );
 }

@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:libra_ui/domain/helpers/dio_builder.dart';
 import 'package:libra_ui/domain/mappers/account/transaction_mapper.dart';
+import 'package:libra_ui/domain/mappers/account/transfer/external_transfer_mapper.dart';
 import 'package:libra_ui/domain/models/account/external_transfer.dart';
 import 'package:libra_ui/domain/models/account/transaction.dart';
 import 'package:libra_ui/domain/models/account/transfer.dart';
 import 'package:libra_ui/domain/models/auth/auth_data.dart';
+import 'package:libra_ui/domain/models/account/external_transfer_response.dart';
 import 'package:libra_ui/infrastructure/datasources/account_datasource.dart';
 
 class AccountDatasourceImpl extends AccountDatasource {
@@ -38,7 +40,9 @@ class AccountDatasourceImpl extends AccountDatasource {
   }
 
   @override
-  Future<void> createExternalTransfer(ExternalTransfer transfer) async {
+  Future<ExternalTransferResponse> createExternalTransfer(
+    ExternalTransfer transfer,
+  ) async {
     final endpoint = switch (transfer.operationType) {
       OperationType.debin => '/debin/request',
       OperationType.topUp => '/topup',
@@ -48,11 +52,32 @@ class AccountDatasourceImpl extends AccountDatasource {
     if (response.statusCode != 201) {
       throw Exception('Failed to create external transfer');
     }
+    return ExternalTransferMapper.withOperationType(
+      transfer.operationType,
+      response.data as Map<String, dynamic>,
+    );
   }
 
   @override
   Future<AuthData> getAccountDetails(int accountId) async {
     final response = await _dio.get('/accounts/$accountId');
     return AuthData.fromJson(response.data);
+  }
+
+  @override
+  Future<ExternalTransferResponse> confirmExternalTransfer(
+    int transferId,
+    OperationType operationType,
+  ) async {
+    final endpoint = switch (operationType) {
+      OperationType.debin => '/debin/callback',
+      OperationType.topUp => '/topup/callback',
+      _ => throw UnimplementedError(),
+    };
+    final response = await _dio.post(endpoint, data: {'id': transferId});
+    return ExternalTransferMapper.withOperationType(
+      operationType,
+      response.data as Map<String, dynamic>,
+    );
   }
 }

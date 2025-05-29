@@ -17,13 +17,23 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends ConsumerState<HomeView> {
   @override
+  void initState() {
+    super.initState();
+    // Load transactions each time HomeView is shown
+    Future.microtask(
+      () => ref.read(accountProvider.notifier).getTransactions(),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final balance = ref.watch(balanceProvider);
     final transactions = ref.watch(accountProvider).transactions;
     return Column(
       children: <Widget>[
         const SizedBox(height: 16),
 
-        const BalanceCard(),
+        BalanceCard(balance: balance),
         const SizedBox(height: 24),
 
         Padding(
