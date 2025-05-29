@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
+import 'package:libra_ui/domain/models/account/external_transfer.dart';
 import 'package:libra_ui/presentation/widgets/shared/shared.dart';
 
 class TransferConfirmationScreen extends StatelessWidget {
   final String dest;
   final bool isAlias;
   final double amount;
+  final OperationType operationType;
   final bool success;
   final String? errorMessage;
 
@@ -14,6 +16,7 @@ class TransferConfirmationScreen extends StatelessWidget {
     required this.dest,
     required this.isAlias,
     required this.amount,
+    required this.operationType,
     this.success = true,
     this.errorMessage,
   });
@@ -34,7 +37,17 @@ class TransferConfirmationScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                success ? 'Transfer Successful' : 'Transfer Failed',
+                success
+                    ? (operationType == OperationType.transfer
+                          ? 'Transfer Successful'
+                          : operationType == OperationType.debin
+                          ? 'DEBIN Request Sent'
+                          : 'Top-Up Successful')
+                    : (operationType == OperationType.transfer
+                          ? 'Transfer Failed'
+                          : operationType == OperationType.debin
+                          ? 'DEBIN Request Failed'
+                          : 'Top-Up Failed'),
                 style: TextStyle(
                   color: success ? LibraColors.primaryText : Colors.red,
                   fontSize: 24,
@@ -50,10 +63,12 @@ class TransferConfirmationScreen extends StatelessWidget {
                 const SizedBox(height: 24),
               ],
               if (success) ...[
-                _buildSummaryRow('Destination', dest),
-                const SizedBox(height: 8),
-                _buildSummaryRow('Type', isAlias ? 'Alias' : 'CVU'),
-                const SizedBox(height: 8),
+                if (operationType != OperationType.topUp) ...[
+                  _buildSummaryRow('Destination', dest),
+                  const SizedBox(height: 8),
+                  _buildSummaryRow('Type', isAlias ? 'Alias' : 'CVU'),
+                  const SizedBox(height: 8),
+                ],
                 _buildSummaryRow('Amount', '\$${amount.toStringAsFixed(2)}'),
               ],
             ],

@@ -16,6 +16,15 @@ class AppRoutes {
   static const String transactions = '/transactions';
   static const String settings = '/settings';
   static const String transfer = '/transfer';
+
+  static const List<String> values = [
+    home,
+    login,
+    register,
+    transactions,
+    settings,
+    transfer,
+  ];
 }
 
 final routerProvider = Provider<GoRouter>((ref) {

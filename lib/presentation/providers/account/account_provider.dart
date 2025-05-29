@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/domain/datasources/account_datasource_impl.dart';
+import 'package:libra_ui/domain/models/account/external_transfer.dart';
 import 'package:libra_ui/domain/models/account/transaction.dart';
 import 'package:libra_ui/domain/models/account/transfer.dart';
 import 'package:libra_ui/domain/repositories/account_repository_impl.dart';
@@ -37,6 +38,15 @@ class AccountNotifier extends StateNotifier<AccountState> {
 
   Future<void> createTransfer(Transfer transfer) async {
     await _accountRepository.createTransfer(transfer);
+    // Refresh transactions after creation
+    final updatedTransactions = await _accountRepository.getTransactions(
+      accountId,
+    );
+    state = state.copyWith(transactions: updatedTransactions);
+  }
+
+  Future<void> createExternalTransfer(ExternalTransfer transfer) async {
+    await _accountRepository.createExternalTransfer(transfer);
     // Refresh transactions after creation
     final updatedTransactions = await _accountRepository.getTransactions(
       accountId,

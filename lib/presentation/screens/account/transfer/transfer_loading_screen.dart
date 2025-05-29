@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:libra_ui/domain/models/account/external_transfer.dart';
 import 'package:libra_ui/domain/models/account/transfer.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 import 'package:dio/dio.dart';
@@ -10,12 +11,14 @@ class TransferLoadingScreen extends ConsumerStatefulWidget {
   final String dest;
   final bool isAlias;
   final double amount;
+  final OperationType operationType;
 
   const TransferLoadingScreen({
     super.key,
     required this.dest,
     required this.isAlias,
     required this.amount,
+    required this.operationType,
   });
 
   @override
@@ -32,15 +35,27 @@ class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
 
   Future<void> _performTransfer() async {
     try {
-      final transfer = Transfer(
-        toIdentifier: widget.dest,
-        identifierType: widget.isAlias
-            ? IdentifierType.alias
-            : IdentifierType.cvu,
-        amount: widget.amount,
-      );
-      // Attempt the transfer
-      await ref.read(accountProvider.notifier).createTransfer(transfer);
+      if (widget.operationType == OperationType.transfer) {
+        final transfer = Transfer(
+          toIdentifier: widget.dest,
+          identifierType: widget.isAlias
+              ? IdentifierType.alias
+              : IdentifierType.cvu,
+          amount: widget.amount,
+        );
+        // Attempt the transfer
+        await ref.read(accountProvider.notifier).createTransfer(transfer);
+      } else {
+        final transfer = ExternalTransfer(
+          operationType: widget.operationType,
+          amount: widget.amount,
+        );
+        // Attempt the transfer
+        await ref
+            .read(accountProvider.notifier)
+            .createExternalTransfer(transfer);
+      }
+
       // On success
       if (!mounted) return;
       Navigator.pushReplacement(
@@ -50,6 +65,7 @@ class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
             dest: widget.dest,
             isAlias: widget.isAlias,
             amount: widget.amount,
+            operationType: widget.operationType,
           ),
         ),
       );
@@ -67,6 +83,7 @@ class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
             dest: widget.dest,
             isAlias: widget.isAlias,
             amount: widget.amount,
+            operationType: widget.operationType,
             errorMessage: errorMessage,
           ),
         ),
