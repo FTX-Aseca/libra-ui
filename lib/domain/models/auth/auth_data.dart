@@ -23,6 +23,8 @@ class AuthData extends Equatable {
 
   int get id => int.parse((JwtDecoder.decode(token))['sub']);
 
+  String get userName => email.split('@')[0];
+
   @override
   List<Object?> get props => [token, email];
 }

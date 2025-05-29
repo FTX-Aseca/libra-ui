@@ -35,12 +35,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
   }
 
-  // Controllers are now managed by AuthForm, but you might need to access them
-  // via a GlobalKey if direct access to AuthFormState is required for specific scenarios.
-
   Future<void> _login(Map<String, String> values) async {
-    // The formKey.currentState.validate() is called within AuthForm's _submitForm
-    // So, we can directly proceed if this callback is invoked.
     setState(() => _isLoading = true);
     try {
       await ref

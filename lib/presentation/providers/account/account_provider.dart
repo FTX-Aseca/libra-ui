@@ -35,7 +35,6 @@ class AccountNotifier extends StateNotifier<AccountState> {
     return balance;
   }
 
-  /// Creates a new transaction and refreshes the transaction list.
   Future<void> createTransfer(Transfer transfer) async {
     await _accountRepository.createTransfer(transfer);
     // Refresh transactions after creation

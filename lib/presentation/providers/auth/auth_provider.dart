@@ -22,7 +22,7 @@ class AuthNotifier extends StateNotifier<AuthData> {
       email: email,
       password: password,
     );
-    state = state.copyWith(token: authData.token);
+    state = state.copyWith(email: email, token: authData.token);
   }
 
   Future<void> register({
@@ -30,5 +30,10 @@ class AuthNotifier extends StateNotifier<AuthData> {
     required String password,
   }) async {
     state = await _authRepository.register(email: email, password: password);
+  }
+
+  Future<void> logout() async {
+    await _authRepository.logout();
+    state = AuthData.empty();
   }
 }

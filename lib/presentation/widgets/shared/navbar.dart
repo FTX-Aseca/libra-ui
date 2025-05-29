@@ -18,7 +18,6 @@ class NavBar extends StatefulWidget {
   @override
   State<NavBar> createState() => _NavBarState();
 
-  /// Named constructor for common styling
   factory NavBar.common() => const NavBar(
     cardBackgroundColor: LibraColors.cardBackground,
     accentColorTeal: LibraColors.accentTeal,
