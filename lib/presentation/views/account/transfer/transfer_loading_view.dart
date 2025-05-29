@@ -5,15 +5,15 @@ import 'package:libra_ui/domain/models/account/transfer.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
-import 'package:libra_ui/presentation/screens/account/transfer/transfer_confirmation_screen.dart';
+import 'package:libra_ui/presentation/views/account/transfer/transfer_confirmation_view.dart';
 
-class TransferLoadingScreen extends ConsumerStatefulWidget {
+class TransferLoadingView extends ConsumerStatefulWidget {
   final String dest;
   final bool isAlias;
   final double amount;
   final OperationType operationType;
 
-  const TransferLoadingScreen({
+  const TransferLoadingView({
     super.key,
     required this.dest,
     required this.isAlias,
@@ -22,11 +22,11 @@ class TransferLoadingScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<TransferLoadingScreen> createState() =>
-      _TransferLoadingScreenState();
+  ConsumerState<TransferLoadingView> createState() =>
+      _TransferLoadingViewState();
 }
 
-class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
+class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
   @override
   void initState() {
     super.initState();
@@ -61,7 +61,7 @@ class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => TransferConfirmationScreen(
+          builder: (_) => TransferConfirmationView(
             dest: widget.dest,
             isAlias: widget.isAlias,
             amount: widget.amount,
@@ -79,7 +79,7 @@ class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => TransferConfirmationScreen(
+          builder: (_) => TransferConfirmationView(
             dest: widget.dest,
             isAlias: widget.isAlias,
             amount: widget.amount,
@@ -93,11 +93,8 @@ class _TransferLoadingScreenState extends ConsumerState<TransferLoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: LibraColors.scaffoldBackground,
-      body: Center(
-        child: CircularProgressIndicator(color: LibraColors.accentTeal),
-      ),
+    return const Center(
+      child: CircularProgressIndicator(color: LibraColors.accentTeal),
     );
   }
 }

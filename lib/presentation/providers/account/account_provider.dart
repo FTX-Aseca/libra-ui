@@ -71,6 +71,10 @@ class AccountState {
 }
 
 final balanceProvider = FutureProvider<double>((ref) {
+  final authData = ref.watch(authRepositoryProvider);
+  if (authData.token.isEmpty) {
+    return Future.value(-1.0); // Negative balance indicates an invalid state
+  }
   final notifier = ref.read(accountProvider.notifier);
   return notifier.getBalance();
 });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 
 class NavBar extends StatefulWidget {
@@ -9,47 +8,39 @@ class NavBar extends StatefulWidget {
     required this.cardBackgroundColor,
     required this.accentColorTeal,
     required this.secondaryTextColor,
+    required this.currentIndex,
   });
 
   final Color cardBackgroundColor;
   final Color accentColorTeal;
   final Color secondaryTextColor;
+  final int currentIndex;
 
   @override
   State<NavBar> createState() => _NavBarState();
 
-  factory NavBar.common() => const NavBar(
+  factory NavBar.common(int currentIndex) => NavBar(
     cardBackgroundColor: LibraColors.cardBackground,
     accentColorTeal: LibraColors.accentTeal,
     secondaryTextColor: LibraColors.secondaryText,
+    currentIndex: currentIndex,
   );
 }
 
 class _NavBarState extends State<NavBar> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     final navBarItems = const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home_filled),
-        label: 'Home',
-        key: ValueKey(AppRoutes.home),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.swap_horiz),
-        label: 'Transfer',
-        key: ValueKey(AppRoutes.transfer),
-      ),
+      BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
+      BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: 'Transfer'),
       BottomNavigationBarItem(
         icon: Icon(Icons.settings_outlined),
         label: 'Settings',
-        key: ValueKey(AppRoutes.settings),
       ),
     ];
 
     return BottomNavigationBar(
-      currentIndex: _selectedIndex,
+      currentIndex: widget.currentIndex,
       backgroundColor: widget.cardBackgroundColor,
       selectedItemColor: widget.accentColorTeal,
       unselectedItemColor: widget.secondaryTextColor.withValues(alpha: 0.7),
@@ -60,15 +51,7 @@ class _NavBarState extends State<NavBar> {
       ),
       unselectedLabelStyle: const TextStyle(fontSize: 10),
       items: navBarItems,
-      onTap: (index) {
-        setState(() => _selectedIndex = index);
-        final parsedRoute = _parseRoute(index, navBarItems);
-        // TODO: update selected index, refactor all screens as views
-        context.goNamed(parsedRoute);
-      },
+      onTap: (index) => context.go('/home/$index'),
     );
   }
-
-  String _parseRoute(int index, List<BottomNavigationBarItem> navBarItems) =>
-      (navBarItems[index].key as ValueKey<String>).value;
 }
