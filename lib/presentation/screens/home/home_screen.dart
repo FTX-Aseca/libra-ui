@@ -27,7 +27,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     super.dispose();
   }
 
-  final views = const [HomeView(), TransferView(), SettingsView()];
+  final views = const [
+    HomeView(),
+    TransferView(),
+    TransactionsView(),
+    SettingsView(),
+  ];
 
   @override
   Widget build(BuildContext context) {

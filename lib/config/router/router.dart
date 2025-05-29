@@ -13,28 +13,26 @@ class AppRoutes {
   static const String register = '/register';
   static const String transactions = '/transactions';
   static const String transfer = '/transfer';
-  static const String settings = '/settings';
 
   static const List<String> values = [
     home,
     login,
     register,
     transactions,
-    settings,
     transfer,
   ];
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authRepositoryProvider);
-
-  final isAuthenticated = authState.token.isNotEmpty;
+  final isAuthenticated = ref.watch(
+    authRepositoryProvider.select((data) => data.token.isNotEmpty),
+  );
   final homeRoute = GoRoute(
     path: '${AppRoutes.home}/:page',
     name: AppRoutes.home,
     builder: (context, state) {
       final pageIndex = _getRouteIndex(state);
-      if (pageIndex > 2 || pageIndex < 0) return const HomeScreen();
+      if (pageIndex > 3 || pageIndex < 0) return const HomeScreen();
       return HomeScreen(pageIndex: pageIndex);
     },
   );

@@ -4,18 +4,19 @@ import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/domain/models/account/external_transfer.dart';
 import 'package:libra_ui/presentation/widgets/shared/libra_text_form_field.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
-import 'package:libra_ui/presentation/views/account/transfer/transfer_loading_view.dart';
 
 class TransferAmountView extends ConsumerStatefulWidget {
   final String dest;
   final bool isAlias;
   final OperationType operationType;
+  final void Function(double amount) onNext;
 
   const TransferAmountView({
     super.key,
     required this.dest,
     required this.isAlias,
     required this.operationType,
+    required this.onNext,
   });
 
   @override
@@ -48,17 +49,7 @@ class _TransferAmountScreenState extends ConsumerState<TransferAmountView> {
 
   void _onConfirm() {
     final amount = double.parse(_amountController.text);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TransferLoadingView(
-          dest: widget.dest,
-          isAlias: widget.isAlias,
-          amount: amount,
-          operationType: widget.operationType,
-        ),
-      ),
-    );
+    widget.onNext(amount);
   }
 
   @override

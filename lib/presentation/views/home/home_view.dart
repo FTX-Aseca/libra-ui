@@ -40,7 +40,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
               ),
               TextButton(
-                onPressed: () => context.pushNamed(AppRoutes.transactions),
+                onPressed: () => context.push('${AppRoutes.home}/2'),
                 child: const Text(
                   'All >',
                   style: TextStyle(color: LibraColors.accentTeal, fontSize: 14),

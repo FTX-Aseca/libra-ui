@@ -9,6 +9,7 @@ class TransferConfirmationView extends StatelessWidget {
   final OperationType operationType;
   final bool success;
   final String? errorMessage;
+  final VoidCallback onDone;
 
   const TransferConfirmationView({
     super.key,
@@ -18,6 +19,7 @@ class TransferConfirmationView extends StatelessWidget {
     required this.operationType,
     this.success = true,
     this.errorMessage,
+    required this.onDone,
   });
 
   @override
@@ -67,6 +69,22 @@ class TransferConfirmationView extends StatelessWidget {
             ],
             _buildSummaryRow('Amount', '\$${amount.toStringAsFixed(2)}'),
           ],
+          const SizedBox(height: 24),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: onDone,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: LibraColors.accentTeal,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Done', style: TextStyle(fontSize: 16)),
+            ),
+          ),
         ],
       ),
     );

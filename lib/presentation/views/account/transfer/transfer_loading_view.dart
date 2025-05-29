@@ -5,13 +5,13 @@ import 'package:libra_ui/domain/models/account/transfer.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
-import 'package:libra_ui/presentation/views/account/transfer/transfer_confirmation_view.dart';
 
 class TransferLoadingView extends ConsumerStatefulWidget {
   final String dest;
   final bool isAlias;
   final double amount;
   final OperationType operationType;
+  final void Function(bool success, String? errorMessage) onComplete;
 
   const TransferLoadingView({
     super.key,
@@ -19,6 +19,7 @@ class TransferLoadingView extends ConsumerStatefulWidget {
     required this.isAlias,
     required this.amount,
     required this.operationType,
+    required this.onComplete,
   });
 
   @override
@@ -58,17 +59,7 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
 
       // On success
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => TransferConfirmationView(
-            dest: widget.dest,
-            isAlias: widget.isAlias,
-            amount: widget.amount,
-            operationType: widget.operationType,
-          ),
-        ),
-      );
+      widget.onComplete(true, null);
     } catch (e) {
       // Extract error message
       final errorMessage =
@@ -76,18 +67,7 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
           ? (e.response!.data['error'] as String? ?? e.message)
           : e.toString();
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => TransferConfirmationView(
-            dest: widget.dest,
-            isAlias: widget.isAlias,
-            amount: widget.amount,
-            operationType: widget.operationType,
-            errorMessage: errorMessage,
-          ),
-        ),
-      );
+      widget.onComplete(false, errorMessage);
     }
   }
 

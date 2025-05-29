@@ -33,6 +33,7 @@ class _NavBarState extends State<NavBar> {
     final navBarItems = const <BottomNavigationBarItem>[
       BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
       BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: 'Transfer'),
+      BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Transactions'),
       BottomNavigationBarItem(
         icon: Icon(Icons.settings_outlined),
         label: 'Settings',

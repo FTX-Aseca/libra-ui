@@ -12,6 +12,7 @@ class SettingsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
     void copyToClipboard(String label, String value) {
       Clipboard.setData(ClipboardData(text: value));
       ScaffoldMessenger.of(
