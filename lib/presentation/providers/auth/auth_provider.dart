@@ -36,7 +36,10 @@ class AuthNotifier extends StateNotifier<AuthData> {
     required String email,
     required String password,
   }) async {
-    state = await _authRepository.register(email: email, password: password);
+    // Perform registration
+    await _authRepository.register(email: email, password: password);
+    // After registering, automatically log in to obtain a valid token
+    await login(email: email, password: password);
   }
 
   Future<void> logout() async {

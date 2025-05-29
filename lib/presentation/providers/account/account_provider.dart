@@ -9,7 +9,7 @@ import 'package:libra_ui/infrastructure/repositories/account_repository.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 
 typedef AccountProvider = StateNotifierProvider<AccountNotifier, AccountState>;
-final accountProvider = AccountProvider.autoDispose((ref) {
+final accountProvider = AccountProvider((ref) {
   final authData = ref.watch(authRepositoryProvider);
 
   final accountRepository = AccountRepositoryImpl(

@@ -52,6 +52,10 @@ class AccountDatasourceImpl extends AccountDatasource {
     if (response.statusCode != 201) {
       throw Exception('Failed to create external transfer');
     }
+
+    if (transfer.operationType == OperationType.topUp) {
+      response.data['amount'] = transfer.amount;
+    }
     return ExternalTransferMapper.withOperationType(
       transfer.operationType,
       response.data as Map<String, dynamic>,

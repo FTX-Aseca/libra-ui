@@ -11,7 +11,9 @@ abstract class AccountRepository {
 
   Future<void> createTransfer(Transfer transfer);
 
-  Future<ExternalTransferResponse> createExternalTransfer(ExternalTransfer transfer);
+  Future<ExternalTransferResponse> createExternalTransfer(
+    ExternalTransfer transfer,
+  );
 
   Future<ExternalTransferResponse> confirmExternalTransfer(
     int transferId,
