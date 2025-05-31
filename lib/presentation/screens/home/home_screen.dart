@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
+import 'package:libra_ui/presentation/widgets/home/card_action_button.dart';
 import 'package:libra_ui/presentation/widgets/home/home.dart';
 import 'package:libra_ui/presentation/widgets/shared/shared.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   int currentIndex = 0;
 
   @override
@@ -20,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            // 1. Header Tabs
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -34,11 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 16),
 
-            // 2. Flex Card
             _buildBalanceCard(),
             const SizedBox(height: 24),
 
-            // 3. Activity Section Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
@@ -68,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 8),
-
-            // 4. Activity List
             Expanded(child: _buildActivityList()),
           ],
         ),
@@ -105,12 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBalanceCard() {
-    final actionCards = [
-      cardActionButton(Icons.info_outline, 'Details'),
-      cardActionButton(Icons.star_border, 'Benefits'),
-      cardActionButton(
-        Icons.add_to_home_screen_outlined,
-        'Add to Apple Wallet',
+    final actionCards = const <CardActionButton>[
+      CardActionButton(icon: Icons.info_outline, label: 'Details'),
+      CardActionButton(icon: Icons.star_border, label: 'Benefits'),
+      CardActionButton(
+        icon: Icons.add_to_home_screen_outlined,
+        label: 'Add to Apple Wallet',
         isPrimary: true,
       ),
     ];
