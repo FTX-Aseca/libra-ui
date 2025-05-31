@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
-import 'package:libra_ui/presentation/providers/account/balance_provider.dart';
+import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 
 class BalanceCard extends ConsumerWidget {
   const BalanceCard({super.key, required this.actionCards});
@@ -10,7 +10,7 @@ class BalanceCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final balanceAsync = ref.watch(balanceProvider);
+    final balance = ref.watch(balanceProvider);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
       padding: const EdgeInsets.all(20.0),
@@ -60,7 +60,7 @@ class BalanceCard extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 24),
-          balanceAsync.when(
+          balance.when(
             data: (value) => Text(
               'U\$D $value',
               style: const TextStyle(
