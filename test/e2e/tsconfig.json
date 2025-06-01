@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es2019",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types", "./node_modules"],
+    "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework"]
+  },
+  "include": ["./**/*.ts", "../node_modules/@wdio/globals/types.d.ts"],
+  "exclude": ["node_modules"]
+} 
