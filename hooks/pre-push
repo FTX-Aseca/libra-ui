@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+echo "🔍 Running flutter analyze, tests and build"
+flutter analyze
+flutter test
+flutter build
+if [ $? -ne 0 ]; then
+  echo "🚫 Code quality checks failed. Aborting push."
+  exit 1
+fi
