@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/domain/models/account/transaction.dart';
+import 'package:libra_ui/domain/models/account/external_transfer_response.dart';
 import 'package:libra_ui/presentation/providers/account/account_provider.dart';
 import 'package:libra_ui/presentation/widgets/home/balance_card.dart';
 import 'package:libra_ui/presentation/widgets/home/transaction_history.dart';
@@ -28,7 +29,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     final balance = ref.watch(balanceProvider);
-    final transactions = ref.watch(accountProvider).transactions;
+    final accountState = ref.watch(accountProvider);
+    final transactions = accountState.transactions;
+    final externalTransfers = accountState.externalTransfers;
     return Column(
       children: <Widget>[
         const SizedBox(height: 16),
@@ -64,21 +67,26 @@ class _HomeViewState extends ConsumerState<HomeView> {
           child: RefreshIndicator(
             onRefresh: () async {
               await ref.read(accountProvider.notifier).getTransactions();
+              await ref.read(accountProvider.notifier).getBalance();
             },
-            child: _buildActivityList(transactions),
+            child: _buildActivityList(transactions, externalTransfers),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildActivityList(List<Transaction> transactions) {
+  Widget _buildActivityList(
+    List<Transaction> transactions,
+    List<ExternalTransferResponse> externalTransfers,
+  ) {
     return TransactionHistory(
       cardBackgroundColor: LibraColors.cardBackground,
       accentColorTeal: LibraColors.accentTeal,
       primaryTextColor: LibraColors.primaryText,
       secondaryTextColor: LibraColors.secondaryText,
       transactions: transactions,
+      externalTransfers: externalTransfers,
       limit: transactions.length,
     );
   }

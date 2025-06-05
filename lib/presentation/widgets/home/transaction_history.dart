@@ -33,8 +33,13 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   @override
   Widget build(BuildContext context) {
     final accountNotifier = ref.watch(accountProvider.notifier);
+    final pendingExternalTransfers = widget.externalTransfers
+        .where((e) => e.status.toUpperCase() != 'COMPLETED')
+        .toList();
 
-    if (widget.limit == 0) return const SizedBox.shrink();
+    if (widget.transactions.isEmpty && pendingExternalTransfers.isEmpty) {
+      return const SizedBox.shrink();
+    }
     final transactionListView = ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       itemCount: widget.limit,
@@ -51,9 +56,9 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
     );
     final externalTransferListView = ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      itemCount: widget.externalTransfers.length,
+      itemCount: pendingExternalTransfers.length,
       itemBuilder: (context, index) {
-        final externalTransfer = widget.externalTransfers[index];
+        final externalTransfer = pendingExternalTransfers[index];
         return _ExternalTransferTile(
           cardBackgroundColor: widget.cardBackgroundColor,
           accentColorTeal: widget.accentColorTeal,

@@ -5,6 +5,7 @@ import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 import 'package:libra_ui/presentation/widgets/auth/auth_form.dart';
+import 'package:libra_ui/domain/mappers/error_mapper.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -14,11 +15,6 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -44,9 +40,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         context.go(AppRoutes.login);
       }
     } catch (e) {
+      final errorMessage = ErrorMapper.mapError(e);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration Failed: ${e.toString()}')),
+          SnackBar(content: Text('Registration Failed: $errorMessage')),
         );
       }
     } finally {
