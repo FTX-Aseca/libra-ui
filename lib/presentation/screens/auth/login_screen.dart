@@ -6,6 +6,7 @@ import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_message_provider.dart';
 import 'package:libra_ui/presentation/widgets/auth/auth_form.dart';
+import 'package:libra_ui/domain/mappers/error_mapper.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -44,10 +45,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         context.go(AppRoutes.home);
       }
     } catch (e) {
+      final errorMessage = ErrorMapper.mapError(e);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login Failed: ${e.toString()}')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Login Failed: $errorMessage')));
       }
     } finally {
       if (mounted) {

@@ -160,26 +160,26 @@ jobs:
           if [ ! -f "$PLIST_PATH" ]; then
             echo "::warning::ExportOptions.plist not found. Creating a default one for ad-hoc distribution."
             echo "::warning::You should create and customize an ExportOptions.plist for your specific needs (e.g., app-store, enterprise)."
-            cat <<EOF > "$PLIST_PATH"
-            <?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-            <plist version="1.0">
-            <dict>
-                <key>method</key>
-                <string>ad-hoc</string> <!-- Or app-store, enterprise, development -->
-                <key>teamID</key>
-                <string>YOUR_TEAM_ID</string> <!-- IMPORTANT: Replace with your Apple Developer Team ID -->
-                <key>signingStyle</key>
-                <string>automatic</string>
-                <key>stripSwiftSymbols</key>
-                <true/>
-                <key>uploadBitcode</key>
-                <false/>
-                <key>uploadSymbols</key>
-                <false/>
-            </dict>
-            </plist>
-            EOF
+          cat <<EOF > "$PLIST_PATH"
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>ad-hoc</string> <!-- Or app-store, enterprise, development -->
+              <key>teamID</key>
+              <string>YOUR_TEAM_ID</string> <!-- IMPORTANT: Replace with your Apple Developer Team ID -->
+              <key>signingStyle</key>
+              <string>automatic</string>
+              <key>stripSwiftSymbols</key>
+              <true/>
+              <key>uploadBitcode</key>
+              <false/>
+              <key>uploadSymbols</key>
+              <false/>
+          </dict>
+          </plist>
+          EOF
             echo "Default ExportOptions.plist created. PLEASE REVIEW AND CUSTOMIZE IT, ESPECIALLY YOUR TEAM ID."
           else
             echo "Using existing ExportOptions.plist."
