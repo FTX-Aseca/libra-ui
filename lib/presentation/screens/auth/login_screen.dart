@@ -6,7 +6,6 @@ import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 import 'package:libra_ui/presentation/providers/auth/auth_message_provider.dart';
 import 'package:libra_ui/presentation/widgets/auth/auth_form.dart';
-// TODO: Import a shared button widget if available, or create one.
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -35,12 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
   }
 
-  // Controllers are now managed by AuthForm, but you might need to access them
-  // via a GlobalKey if direct access to AuthFormState is required for specific scenarios.
-
   Future<void> _login(Map<String, String> values) async {
-    // The formKey.currentState.validate() is called within AuthForm's _submitForm
-    // So, we can directly proceed if this callback is invoked.
     setState(() => _isLoading = true);
     try {
       await ref

@@ -14,20 +14,32 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
   Future<void> _register(Map<String, String> values) async {
     setState(() => _isLoading = true);
     try {
-      await ref
-          .read(authRepositoryProvider.notifier)
-          .register(email: values['email']!, password: values['password']!);
+      final authNotifier = ref.read(authRepositoryProvider.notifier);
+
+      await authNotifier.register(
+        email: values['email']!,
+        password: values['password']!,
+      );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Registration Successful! Please login.'),
           ),
+        );
+        await authNotifier.login(
+          email: values['email']!,
+          password: values['password']!,
         );
         context.go(AppRoutes.login);
       }
@@ -78,9 +90,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         labelText: 'Confirm Password',
         placeholder: 'Confirm your password',
         initiallyObscure: true,
-        // Cross-field validation is handled in AuthForm by checking fieldName == 'confirmPassword'
-        // and comparing with 'password' controller. So no specific validator needed here for that,
-        // but we still need basic empty check.
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Please confirm your password';
@@ -110,7 +119,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: AuthForm(
               formKey: _formKey,
               fieldConfigs: registerFields,
-              // confirmPasswordController is no longer needed here as it's part of fieldConfigs
               isLoading: _isLoading,
               onSubmit: _register,
               submitButtonText: 'Sign Up',
@@ -119,7 +127,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               alternateAuthText: 'Already have an account? ',
               alternateAuthLinkText: 'Login',
               onAlternateAuthPressed: () => context.pop(),
-              // isRegisterForm is also no longer needed, AuthForm infers from confirmPassword field or specific validators
             ),
           ),
         ),
