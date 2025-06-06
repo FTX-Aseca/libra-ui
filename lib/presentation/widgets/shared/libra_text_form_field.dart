@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 
-class AuthTextFormField extends StatelessWidget {
+class LibraTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String fieldName;
   final String labelText;
@@ -10,11 +10,12 @@ class AuthTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
   final FocusNode? focusNode;
   final void Function(String)? onFieldSubmitted;
   final TextInputAction? textInputAction;
 
-  const AuthTextFormField({
+  const LibraTextFormField({
     super.key,
     required this.controller,
     required this.fieldName,
@@ -24,6 +25,7 @@ class AuthTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.keyboardType,
     this.validator,
+    this.onChanged,
     this.focusNode,
     this.onFieldSubmitted,
     this.textInputAction,
@@ -35,7 +37,7 @@ class AuthTextFormField extends StatelessWidget {
       label: '${fieldName}_textfield',
       child: TextFormField(
         controller: controller,
-        focusNode: focusNode,
+        onChanged: onChanged,focusNode: focusNode,
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
-import 'package:libra_ui/presentation/providers/account/account_provider.dart';
+import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 
 class BalanceCard extends ConsumerWidget {
-  const BalanceCard({super.key, required this.actionCards});
+  const BalanceCard({
+    super.key,
+    this.actionCards = const <Widget>[],
+    required this.balance,
+  });
 
   final List<Widget> actionCards;
+  final AsyncValue<double> balance;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final balance = ref.watch(balanceProvider);
+    final authData = ref.watch(authRepositoryProvider);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0),
       padding: const EdgeInsets.all(20.0),
@@ -38,13 +43,16 @@ class BalanceCard extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Welcome, user!',
-                style: TextStyle(
+              Text(
+                'Welcome, ${authData.userName}!',
+                style: const TextStyle(
                   color: LibraColors.primaryText,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -60,6 +68,12 @@ class BalanceCard extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 24),
+
+          const Text(
+            'Your balance',
+            style: TextStyle(color: LibraColors.secondaryText, fontSize: 16),
+          ),
+
           balance.when(
             data: (value) => Text(
               'U\$D $value',
@@ -81,15 +95,6 @@ class BalanceCard extends ConsumerWidget {
             error: (err, stack) => const Text(
               'Error fetching balance',
               style: TextStyle(color: Colors.red, fontSize: 16),
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            '•••• 3079',
-            style: TextStyle(
-              color: LibraColors.secondaryText,
-              fontSize: 16,
-              letterSpacing: 2,
             ),
           ),
           const SizedBox(height: 24),

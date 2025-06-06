@@ -51,6 +51,18 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
+      - name: Download Android APK
+        uses: actions/download-artifact@v4
+        with:
+          name: android-apk
+          path: .
+
+      - name: Download iOS IPA
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-ipa
+          path: .
+
       - name: Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -153,60 +165,22 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Create/Verify ExportOptions.plist
-        working-directory: ./ios
-        run: |
-          PLIST_PATH="ExportOptions.plist"
-          if [ ! -f "$PLIST_PATH" ]; then
-            echo "::warning::ExportOptions.plist not found. Creating a default one for ad-hoc distribution."
-            echo "::warning::You should create and customize an ExportOptions.plist for your specific needs (e.g., app-store, enterprise)."
-            cat <<EOF > "$PLIST_PATH"
-            <?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-            <plist version="1.0">
-            <dict>
-                <key>method</key>
-                <string>ad-hoc</string> <!-- Or app-store, enterprise, development -->
-                <key>teamID</key>
-                <string>YOUR_TEAM_ID</string> <!-- IMPORTANT: Replace with your Apple Developer Team ID -->
-                <key>signingStyle</key>
-                <string>automatic</string>
-                <key>stripSwiftSymbols</key>
-                <true/>
-                <key>uploadBitcode</key>
-                <false/>
-                <key>uploadSymbols</key>
-                <false/>
-            </dict>
-            </plist>
-            EOF
-            echo "Default ExportOptions.plist created. PLEASE REVIEW AND CUSTOMIZE IT, ESPECIALLY YOUR TEAM ID."
-          else
-            echo "Using existing ExportOptions.plist."
-          fi
-
       - name: Flutter Clean
         run: flutter clean
 
       - name: Flutter Pub Get
         run: flutter pub get
 
-      - name: Build Flutter IPA
+      - name: Build and package unsigned IPA
         run: |
-          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist --build-name=${{ needs.determine-version.outputs.version_tag }} --build-number=${{ needs.determine-version.outputs.build }}
-          IPA_DIR="build/ios/ipa"
+          flutter build ipa --no-codesign --release --build-name=${{ needs.determine-version.outputs.version_tag }} --build-number=${{ needs.determine-version.outputs.build }}
+          APP_PATH="build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app"
           IPA_NAME="app-release-${{ needs.determine-version.outputs.version_tag }}.ipa"
-          BUILT_IPA=$(find "$IPA_DIR" -name "*.ipa" -type f | head -n 1)
-
-          if [ -n "$BUILT_IPA" ] && [ -f "$BUILT_IPA" ]; then
-            echo "IPA found at $BUILT_IPA"
-            mv "$BUILT_IPA" "$IPA_NAME"
-            echo "IPA renamed to $IPA_NAME"
-          else
-            echo "::error::IPA not found in $IPA_DIR or build failed."
-            ls -R build/ios # List contents for debugging
-            exit 1
-          fi
+          mkdir -p Payload
+          cp -R "$APP_PATH" "Payload/Runner.app"
+          zip -r "$IPA_NAME" Payload
+          rm -rf Payload
+          echo "Created unsigned IPA: $IPA_NAME"
 
       - name: Upload iOS IPA
         uses: actions/upload-artifact@v4
