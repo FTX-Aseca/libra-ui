@@ -190,6 +190,7 @@ class _AuthFormState extends State<AuthForm> {
       formFields.add(
         AuthTextFormField(
           controller: controller,
+          fieldName: config.fieldName,
           labelText: config.labelText,
           hintText: config.placeholder,
           prefixIconData: config.icon,
