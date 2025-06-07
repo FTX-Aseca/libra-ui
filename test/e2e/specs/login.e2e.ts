@@ -6,12 +6,9 @@ import HomePage from '../pageobjects/home.page';
 
 describe('Authentication Flow', () => {
 
-    beforeEach(async () => {
-        // The `driver.reset()` command is a good way to reset the app to its initial state.
-        // It's equivalent to closing and reopening the app.
-        // Note: `noReset` capability in your wdio.conf.ts should be `false` for this to work as expected.
-        await (driver as any).reset();
-    });
+    // beforeEach(async () => {
+    //     await driver.executeScript('flutter:reset', []);
+    // });
 
     it('should allow a user to sign up, log out, and log back in', async () => {
         // Create unique credentials for the new user
