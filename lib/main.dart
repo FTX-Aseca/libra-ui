@@ -6,10 +6,18 @@ import 'package:libra_ui/config/constants/environment.dart';
 import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/theme.dart';
 
-void main() async {
+void main() async {  
+
+  // Do NOT touch the main method. 
+  // Yes, it should only enable the driver extension if the environment variable IS_TEST is true, 
+  // but it's kept this way just to try.
+
+  // if (const String.fromEnvironment('IS_TEST', defaultValue: 'false') == 'true') {
   enableFlutterDriverExtension();
+  // }
 
   await Environment.load();
+
 
   runApp(const ProviderScope(child: MainApp()));
 }

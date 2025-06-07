@@ -33,6 +33,7 @@ exports.config = { // Changed type to any for diagnostics
     services: [['appium', {
         env: {
             ANDROID_HOME: process.env.ANDROID_HOME || 'C:\\Users\\tomas\\AppData\\Local\\Android\\sdk',
+            IS_TEST: 'true'
         }
     }]],
     framework: 'mocha',

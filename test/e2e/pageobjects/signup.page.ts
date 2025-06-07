@@ -1,22 +1,24 @@
-import { $ } from '@wdio/globals'
+import { browser } from '@wdio/globals';
+import { find } from '../utils/flutter_finder';
+import { ElementReference } from '@wdio/protocols';
 
 class SignUpPage {
-    get emailField() {
-        return $('~signup_email_field');
-    }
-
-    get passwordField() {
-        return $('~signup_password_field');
-    }
-
-    get signUpButton() {
-        return $('~signup_button');
+    private getElementId(elementRef: ElementReference): string {
+        return elementRef['element-6066-11e4-a52e-4f735466cecf'] || (elementRef as any).ELEMENT;
     }
 
     async signup(email: string, password: string) {
-        await this.emailField.setValue(email);
-        await this.passwordField.setValue(password);
-        await this.signUpButton.click();
+        const emailFieldRef = await browser.execute('flutter:findElement', find.byValueKey('email')) as ElementReference;
+        await browser.elementSendKeys(this.getElementId(emailFieldRef), email);
+
+        const passwordFieldRef = await browser.execute('flutter:findElement', find.byValueKey('password')) as ElementReference;
+        await browser.elementSendKeys(this.getElementId(passwordFieldRef), password);
+
+        const confirmFieldRef = await browser.execute('flutter:findElement', find.byValueKey('confirmPassword')) as ElementReference;
+        await browser.elementSendKeys(this.getElementId(confirmFieldRef), password);
+
+        const signupButtonRef = await browser.execute('flutter:findElement', find.byValueKey('sign_up_button')) as ElementReference;
+        await browser.elementClick(this.getElementId(signupButtonRef));
     }
 }
 

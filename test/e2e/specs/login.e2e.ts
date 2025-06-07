@@ -20,21 +20,21 @@ describe('Authentication Flow', () => {
 
         // Sign up and verify we are on the home screen
         await SignUpPage.signup(email, password);
-        await expect(HomePage.homeScreenIndicator).toBeDisplayed();
+        await expect(await HomePage.isHomeScreenDisplayed()).toBe(true);
 
         // Log out and verify we are back on the login screen
         await HomePage.logout();
-        await expect(LoginPage.emailField).toBeDisplayed();
+        await expect(await LoginPage.isEmailFieldDisplayed()).toBe(true);
 
         // Log in with the new credentials and verify we are on the home screen again
         await LoginPage.login(email, password);
-        await expect(HomePage.homeScreenIndicator).toBeDisplayed();
+        await expect(await HomePage.isHomeScreenDisplayed()).toBe(true);
     });
 
     it('should show an error with invalid credentials', async () => {
         await LoginPage.login('wronguser@example.com', 'wrongpassword');
 
         // Assert error message is shown
-        await expect(LoginPage.snackbarError).toBeDisplayed();
+        await expect(await LoginPage.isSnackbarErrorDisplayed()).toBe(true);
     });
 }); 

@@ -1,16 +1,20 @@
-import { $ } from '@wdio/globals'
+import { browser } from '@wdio/globals';
+import { find } from '../utils/flutter_finder';
+import { ElementReference } from '@wdio/protocols';
 
 class HomePage {
-    get homeScreenIndicator() {
-        return $("~home_screen_key");
+    private getElementId(elementRef: ElementReference): string {
+        return elementRef['element-6066-11e4-a52e-4f735466cecf'] || (elementRef as any).ELEMENT;
     }
 
-    get logoutButton() {
-        return $('~logout_button');
+    async isHomeScreenDisplayed(): Promise<boolean> {
+        const homeIndicatorRef = await browser.execute('flutter:findElement', find.byValueKey('home_screen_key')) as ElementReference;
+        return browser.isElementDisplayed(this.getElementId(homeIndicatorRef));
     }
 
     async logout() {
-        await this.logoutButton.click();
+        const logoutButtonRef = await browser.execute('flutter:findElement', find.byValueKey('logout_button')) as ElementReference;
+        await browser.elementClick(this.getElementId(logoutButtonRef));
     }
 }
 

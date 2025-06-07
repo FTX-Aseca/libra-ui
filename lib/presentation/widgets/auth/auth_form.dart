@@ -145,12 +145,14 @@ class _AuthFormState extends State<AuthForm> {
           ..._buildFormFields(),
           const SizedBox(height: 30),
           AuthButton(
+            key: ValueKey('${widget.submitButtonText.toLowerCase().replaceAll(' ', '_')}_button'),
             text: widget.submitButtonText,
             isLoading: widget.isLoading,
             onPressed: _submitForm,
           ),
           const SizedBox(height: 20),
           TextButton(
+            key: const ValueKey('alternate_auth_button'),
             onPressed: widget.onAlternateAuthPressed,
             child: RichText(
               text: TextSpan(
