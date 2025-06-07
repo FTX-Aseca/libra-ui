@@ -190,7 +190,7 @@ class _AuthFormState extends State<AuthForm> {
       formFields.add(
         LibraTextFormField(
           controller: controller,
-          fieldName: config.fieldName,
+          semanticsFieldName: config.fieldName,
           labelText: config.labelText,
           hintText: config.placeholder,
           prefixIconData: config.icon,

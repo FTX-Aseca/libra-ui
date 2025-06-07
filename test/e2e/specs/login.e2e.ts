@@ -1,40 +1,43 @@
 // test/e2e/specs/login.e2e.ts
-describe('Login Flow', () => {
-    it('should login successfully with valid credentials', async () => {
-        // Example: Wait for a known element on the initial screen if necessary
-        // const appLoadedIndicator = await $('~app_loaded_indicator_semantic_label');
-        // await appLoadedIndicator.waitForDisplayed({ timeout: 20000 });
+import { driver } from '@wdio/globals'
+import LoginPage from '../pageobjects/login.page';
+import SignUpPage from '../pageobjects/signup.page';
+import HomePage from '../pageobjects/home.page';
 
-        // Replace with actual semantic labels or keys from your Flutter app
-        const emailField = await $('~email_text_field'); // Updated selector
-        await emailField.setValue('testuser@example.com');
+describe('Authentication Flow', () => {
 
-        const passwordField = await $('~password_text_field'); // Updated selector
-        await passwordField.setValue('password123');
+    beforeEach(async () => {
+        // The `driver.reset()` command is a good way to reset the app to its initial state.
+        // It's equivalent to closing and reopening the app.
+        // Note: `noReset` capability in your wdio.conf.ts should be `false` for this to work as expected.
+        await (driver as any).reset();
+    });
 
-        const loginButton = await $('~login_button'); // Updated selector
-        await loginButton.click();
+    it('should allow a user to sign up, log out, and log back in', async () => {
+        // Create unique credentials for the new user
+        const email = `testuser-${Date.now()}@example.com`;
+        const password = 'password123';
 
-        // Assert successful login (e.g., presence of a dashboard element)
-        const homeScreenIndicator = await $("~home_screen_key"); // Updated selector for home screen
-        await expect(homeScreenIndicator).toBeDisplayed();
-        // await expect(dashboardHeader).toHaveText('Welcome!'); // Or other assertion
+        // Navigate to the signup page
+        await LoginPage.navigateToSignUp();
+
+        // Sign up and verify we are on the home screen
+        await SignUpPage.signup(email, password);
+        await expect(HomePage.homeScreenIndicator).toBeDisplayed();
+
+        // Log out and verify we are back on the login screen
+        await HomePage.logout();
+        await expect(LoginPage.emailField).toBeDisplayed();
+
+        // Log in with the new credentials and verify we are on the home screen again
+        await LoginPage.login(email, password);
+        await expect(HomePage.homeScreenIndicator).toBeDisplayed();
     });
 
     it('should show an error with invalid credentials', async () => {
-        // Similar to above, but enter wrong credentials
-        const emailField = await $('~email_text_field'); // Updated selector
-        await emailField.setValue('wronguser@example.com');
-
-        const passwordField = await $('~password_text_field'); // Updated selector
-        await passwordField.setValue('wrongpassword');
-
-        const loginButton = await $('~login_button'); // Updated selector
-        await loginButton.click();
+        await LoginPage.login('wronguser@example.com', 'wrongpassword');
 
         // Assert error message is shown
-        const errorMessage = await $('~snackbar_error'); // Updated selector for error message
-        await expect(errorMessage).toBeDisplayed();
-        // await expect(errorMessage).toHaveTextContaining('Invalid credentials');
+        await expect(LoginPage.snackbarError).toBeDisplayed();
     });
 }); 

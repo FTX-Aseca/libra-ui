@@ -1,9 +1,6 @@
-import path from 'path';
-import dotenv from 'dotenv';
+const path = require('path');
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
-
-export const config: any = { // Changed type to any for diagnostics
+exports.config = { // Changed type to any for diagnostics
     runner: 'local',
     specs: [
         './specs/**/*.e2e.ts' // Path to your test files
@@ -26,20 +23,22 @@ export const config: any = { // Changed type to any for diagnostics
     ],
     // Ensure you have at least one capability uncommented and correctly configured to run tests.
 
-    logLevel: 'info', // Can be 'trace', 'debug', 'info', 'warn', 'error', 'silent'
-    bail: 0, // 0 - don't bail, 1 - bail after 1st failure
-    waitforTimeout: 15000, // Default timeout for all waitFor commands
+    logLevel: 'info',
+    bail: 0,
+    waitforTimeout: 15000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     services: [['appium', {
-        // Appium server arguments
         args: {
             address: process.env.APPIUM_HOST || 'localhost',
-            port: parseInt(process.env.APPIUM_PORT || '4723', 10),
-            // relaxedSecurity: true, // Enable if needed for certain commands
-            // log: './appium.log' // Path to store Appium server logs
+            port: parseInt(process.env.APPIUM_PORT || '4724', 10),
         },
-        // command : 'appium' // Default is fine if Appium is in PATH
+        env: {
+            ANDROID_HOME: process.env.ANDROID_HOME,
+        },
+        command: 'appium',
+        appiumPath: './node_modules/appium/index.js',
+        waitStartTime: 20000, // wait 20s for appium to start
     }]],
     framework: 'mocha',
     reporters: ['spec'],

@@ -162,6 +162,7 @@ class _TransferScreenState extends ConsumerState<TransferView> {
               ),
               const SizedBox(height: 16),
               LibraTextFormField(
+                semanticsFieldName: _isAlias ? 'alias' : 'cvu',
                 controller: _destController,
                 labelText: _isAlias ? 'Alias' : 'CVU',
                 hintText: _isAlias ? 'Enter alias' : 'Enter CVU',
