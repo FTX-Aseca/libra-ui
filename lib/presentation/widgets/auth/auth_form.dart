@@ -191,6 +191,7 @@ class _AuthFormState extends State<AuthForm> {
 
       formFields.add(
         LibraTextFormField(
+          key: ValueKey(config.fieldName),
           controller: controller,
           semanticsFieldName: config.fieldName,
           labelText: config.labelText,

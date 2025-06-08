@@ -33,51 +33,50 @@ class LibraTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: '${semanticsFieldName}_textfield',
-      child: TextFormField(
-        controller: controller,
-        onChanged: onChanged,focusNode: focusNode,
-        decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          prefixIcon: Icon(prefixIconData, color: LibraColors.accentTeal),
-          labelStyle: const TextStyle(color: LibraColors.secondaryText),
-          hintStyle: TextStyle(
-            color: LibraColors.secondaryText.withValues(alpha: 0.5),
-          ),
-          filled: true,
-          fillColor: LibraColors.cardBackground,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: LibraColors.secondaryText.withValues(alpha: 0.3),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: LibraColors.accentTeal, width: 2),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.red),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.red, width: 2),
+    return TextFormField(
+      key: key,
+      controller: controller,
+      onChanged: onChanged,
+      focusNode: focusNode,
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        prefixIcon: Icon(prefixIconData, color: LibraColors.accentTeal),
+        labelStyle: const TextStyle(color: LibraColors.secondaryText),
+        hintStyle: TextStyle(
+          color: LibraColors.secondaryText.withValues(alpha: 0.5),
+        ),
+        filled: true,
+        fillColor: LibraColors.cardBackground,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: LibraColors.secondaryText.withValues(alpha: 0.3),
           ),
         ),
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        style: const TextStyle(color: LibraColors.primaryText),
-        validator: validator,
-        onFieldSubmitted: onFieldSubmitted,
-        textInputAction: textInputAction,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: LibraColors.accentTeal, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+        ),
       ),
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      style: const TextStyle(color: LibraColors.primaryText),
+      validator: validator,
+      onFieldSubmitted: onFieldSubmitted,
+      textInputAction: textInputAction,
     );
   }
 }

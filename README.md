@@ -67,9 +67,9 @@ Para obtener una copia local y ponerla en funcionamiento, sigue estos sencillos 
 
 ## Ejecutando Pruebas
 
-*   **Ejecutar todas las pruebas:**
+*   **Ejecutar pruebas de integración:**
     ```sh
-    flutter test
+    flutter test integration_tests
     ```
 *   **Ejecutar pruebas con cobertura:**
     ```sh
