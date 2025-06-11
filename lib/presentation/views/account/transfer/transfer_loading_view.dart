@@ -47,10 +47,20 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
         // Attempt the transfer
         await ref.read(accountProvider.notifier).createTransfer(transfer);
       } else {
-        final transfer = ExternalTransfer(
-          operationType: widget.operationType,
-          amount: widget.amount,
-        );
+        late final ExternalTransfer transfer;
+        if (widget.operationType == OperationType.debin) {
+          transfer = ExternalTransfer(
+            operationType: widget.operationType,
+            amount: widget.amount,
+            identifierType: widget.isAlias ? IdentifierType.alias : IdentifierType.cvu,
+            fromIdentifier: widget.dest,
+          );
+        } else {
+          transfer = ExternalTransfer(
+            operationType: widget.operationType,
+            amount: widget.amount,
+          );
+        }
         // Attempt the transfer
         await ref
             .read(accountProvider.notifier)
@@ -61,11 +71,14 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
       if (!mounted) return;
       widget.onComplete(true, null);
     } catch (e) {
-      // Extract error message
-      final errorMessage =
-          (e is DioException && e.response?.data is Map<String, dynamic>)
-          ? (e.response!.data['error'] as String? ?? e.message)
-          : e.toString();
+      String errorMessage;
+      if (widget.operationType == OperationType.debin) {
+        errorMessage = 'Unable to complete DEBIN. Balance not enough.';
+      } else if (e is DioException && e.response?.data is Map<String, dynamic>) {
+        errorMessage = (e.response!.data['error'] as String?) ?? e.message ?? 'An error occurred. Please try again.';
+      } else {
+        errorMessage = 'An error occurred. Please try again.';
+      }
       if (!mounted) return;
       widget.onComplete(false, errorMessage);
     }
