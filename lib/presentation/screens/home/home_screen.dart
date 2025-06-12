@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/libra_colors.dart';
 import 'package:libra_ui/presentation/views/views.dart';
 import 'package:libra_ui/presentation/widgets/shared/shared.dart';
-import 'package:libra_ui/presentation/providers/auth/auth_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   final int pageIndex;
