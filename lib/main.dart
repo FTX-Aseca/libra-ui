@@ -19,7 +19,6 @@ class MainApp extends ConsumerWidget {
     final appRouter = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      title: 'Libra UI',
       theme: AppTheme.theme,
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
