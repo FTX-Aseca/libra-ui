@@ -52,7 +52,9 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
           transfer = ExternalTransfer(
             operationType: widget.operationType,
             amount: widget.amount,
-            identifierType: widget.isAlias ? IdentifierType.alias : IdentifierType.cvu,
+            identifierType: widget.isAlias
+                ? IdentifierType.alias
+                : IdentifierType.cvu,
             fromIdentifier: widget.dest,
           );
         } else {
@@ -74,8 +76,12 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
       String errorMessage;
       if (widget.operationType == OperationType.debin) {
         errorMessage = 'Unable to complete DEBIN. Balance not enough.';
-      } else if (e is DioException && e.response?.data is Map<String, dynamic>) {
-        errorMessage = (e.response!.data['error'] as String?) ?? e.message ?? 'An error occurred. Please try again.';
+      } else if (e is DioException &&
+          e.response?.data is Map<String, dynamic>) {
+        errorMessage =
+            (e.response!.data['error'] as String?) ??
+            e.message ??
+            'An error occurred. Please try again.';
       } else {
         errorMessage = 'An error occurred. Please try again.';
       }

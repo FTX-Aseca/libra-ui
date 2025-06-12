@@ -12,8 +12,14 @@ void main() {
     await tester.pumpAndSettle();
 
     // Login as Alice
-    await tester.enterText(find.byKey(const ValueKey('email')).first, 'alice@example.com');
-    await tester.enterText(find.byKey(const ValueKey('password')).first, 'Password1!');
+    await tester.enterText(
+      find.byKey(const ValueKey('email')).first,
+      'alice@example.com',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('password')).first,
+      'Password1!',
+    );
     await tester.tap(find.byKey(const ValueKey('login_button')));
     await tester.pumpAndSettle();
     // Should land on home
@@ -54,8 +60,14 @@ void main() {
     expect(find.byKey(const ValueKey('email')).first, findsOneWidget);
 
     // Login as Bob
-    await tester.enterText(find.byKey(const ValueKey('email')).first, 'bob@example.com');
-    await tester.enterText(find.byKey(const ValueKey('password')).first, 'Password2!');
+    await tester.enterText(
+      find.byKey(const ValueKey('email')).first,
+      'bob@example.com',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('password')).first,
+      'Password2!',
+    );
     await tester.tap(find.byKey(const ValueKey('login_button')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('home_screen_key')), findsOneWidget);
@@ -67,4 +79,4 @@ void main() {
     // Verify received transaction is shown
     expect(find.text('Received'), findsWidgets);
   });
-} 
+}

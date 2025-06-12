@@ -12,8 +12,14 @@ void main() {
     await tester.pumpAndSettle();
 
     // Login with seeded account
-    await tester.enterText(find.byKey(const ValueKey('email')).first, 'alice@example.com');
-    await tester.enterText(find.byKey(const ValueKey('password')).first, 'Password1!');
+    await tester.enterText(
+      find.byKey(const ValueKey('email')).first,
+      'alice@example.com',
+    );
+    await tester.enterText(
+      find.byKey(const ValueKey('password')).first,
+      'Password1!',
+    );
     await tester.tap(find.byKey(const ValueKey('login_button')));
     await tester.pumpAndSettle();
     // Verify home screen
@@ -58,4 +64,4 @@ void main() {
     await tester.tap(find.text('Done'));
     await tester.pumpAndSettle();
   });
-} 
+}
