@@ -1,3 +1,16 @@
+# [1.0.0-dev.2](https://github.com/FTX-Aseca/libra-ui/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2025-06-12)
+
+
+### Bug Fixes
+
+* **appium:** Solve merge conflicts ([4d4ed2e](https://github.com/FTX-Aseca/libra-ui/commit/4d4ed2ee58f47dbdb444aa1d263be66a7d8a5cae))
+
+
+### Features
+
+* **config:** Set up Appium ([55ec4e6](https://github.com/FTX-Aseca/libra-ui/commit/55ec4e62e696da7c0cb54e5520eb4bf4d2ccd349))
+* **debin:** Fix Debin ([361ccce](https://github.com/FTX-Aseca/libra-ui/commit/361ccce8d4a835828aba4ec4220258494a96c535))
+
 # 1.0.0-dev.1 (2025-06-05)
 
 
