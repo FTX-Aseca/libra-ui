@@ -1,3 +1,10 @@
+# [1.1.0-dev.2](https://github.com/FTX-Aseca/libra-ui/compare/v1.1.0-dev.1...v1.1.0-dev.2) (2025-06-12)
+
+
+### Bug Fixes
+
+* **CI:** Fixed linting issues ([0b33fa7](https://github.com/FTX-Aseca/libra-ui/commit/0b33fa77c6a03cfaa7adaac7f95315c1f8591f42))
+
 # [1.1.0-dev.1](https://github.com/FTX-Aseca/libra-ui/compare/v1.0.0...v1.1.0-dev.1) (2025-06-12)
 
 
