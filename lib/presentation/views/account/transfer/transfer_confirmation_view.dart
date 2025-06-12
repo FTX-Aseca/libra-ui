@@ -39,12 +39,12 @@ class TransferConfirmationView extends StatelessWidget {
                 ? (operationType == OperationType.transfer
                       ? 'Transfer Successful'
                       : operationType == OperationType.debin
-                      ? 'DEBIN Request Sent'
+                      ? 'DEBIN Completed'
                       : 'Top-Up Successful')
                 : (operationType == OperationType.transfer
                       ? 'Transfer Failed'
                       : operationType == OperationType.debin
-                      ? 'DEBIN Request Failed'
+                      ? 'DEBIN Failed'
                       : 'Top-Up Failed'),
             style: TextStyle(
               color: success ? LibraColors.primaryText : Colors.red,

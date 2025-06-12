@@ -136,7 +136,7 @@ class _TransferScreenState extends ConsumerState<TransferView> {
               ],
             ),
             const SizedBox(height: 24),
-            if (_operationType == OperationType.transfer) ...[
+            if (_operationType == OperationType.transfer || _operationType == OperationType.debin) ...[
               ToggleButtons(
                 isSelected: [_isAlias, !_isAlias],
                 onPressed: (index) {
@@ -162,6 +162,7 @@ class _TransferScreenState extends ConsumerState<TransferView> {
               ),
               const SizedBox(height: 16),
               LibraTextFormField(
+                semanticsFieldName: _isAlias ? 'alias' : 'cvu',
                 controller: _destController,
                 labelText: _isAlias ? 'Alias' : 'CVU',
                 hintText: _isAlias ? 'Enter alias' : 'Enter CVU',
@@ -186,7 +187,7 @@ class _TransferScreenState extends ConsumerState<TransferView> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     setState(() {
-                      _dest = _operationType == OperationType.transfer
+                      _dest = (_operationType == OperationType.transfer || _operationType == OperationType.debin)
                           ? _destController.text.trim()
                           : '';
                       _stepIndex = 1;

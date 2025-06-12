@@ -27,12 +27,14 @@ class AccountNotifier extends StateNotifier<AccountState> {
 
   Future<List<Transaction>> getTransactions() async {
     final transactions = await _accountRepository.getTransactions(accountId);
+    if (!mounted) return transactions;
     state = state.copyWith(transactions: transactions);
     return transactions;
   }
 
   Future<double> getBalance() async {
     final balance = await _accountRepository.getBalance(accountId);
+    if (!mounted) return balance;
     state = state.copyWith(balance: balance);
     return balance;
   }
@@ -43,6 +45,7 @@ class AccountNotifier extends StateNotifier<AccountState> {
     final updatedTransactions = await _accountRepository.getTransactions(
       accountId,
     );
+    if (!mounted) return;
     state = state.copyWith(transactions: updatedTransactions);
   }
 
@@ -50,9 +53,11 @@ class AccountNotifier extends StateNotifier<AccountState> {
     final externalTransferResponse = await _accountRepository
         .createExternalTransfer(transfer);
     // Refresh transactions after creation
+    if (!mounted) return;
     final updatedTransactions = await _accountRepository.getTransactions(
       accountId,
     );
+    if (!mounted) return;
     state = state.copyWith(
       transactions: updatedTransactions,
       externalTransfers: [...state.externalTransfers, externalTransferResponse],

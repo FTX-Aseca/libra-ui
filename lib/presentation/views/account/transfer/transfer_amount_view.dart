@@ -91,6 +91,7 @@ class _TransferAmountScreenState extends ConsumerState<TransferAmountView> {
                         const SizedBox(height: 16),
                       ],
                       LibraTextFormField(
+                        semanticsFieldName: 'debin_or_topup_amount',
                         controller: _amountController,
                         labelText: 'Amount',
                         hintText: '0.00',
@@ -160,6 +161,7 @@ class _TransferAmountScreenState extends ConsumerState<TransferAmountView> {
                 ),
                 const SizedBox(height: 16),
                 LibraTextFormField(
+                  semanticsFieldName: 'transfer_amount',
                   controller: _amountController,
                   labelText: 'Amount',
                   hintText: '0.00',

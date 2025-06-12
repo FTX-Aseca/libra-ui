@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:libra_ui/config/constants/environment.dart';
@@ -5,9 +6,7 @@ import 'package:libra_ui/config/router/router.dart';
 import 'package:libra_ui/config/theme/theme.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await Environment.load();
-
   runApp(const ProviderScope(child: MainApp()));
 }
 
