@@ -3,6 +3,7 @@ import 'package:libra_ui/config/theme/libra_colors.dart';
 
 class LibraTextFormField extends StatelessWidget {
   final TextEditingController controller;
+  final String semanticsFieldName;
   final String labelText;
   final String hintText;
   final IconData prefixIconData;
@@ -17,6 +18,7 @@ class LibraTextFormField extends StatelessWidget {
   const LibraTextFormField({
     super.key,
     required this.controller,
+    required this.semanticsFieldName,
     required this.labelText,
     required this.hintText,
     required this.prefixIconData,
@@ -32,6 +34,7 @@ class LibraTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: key,
       controller: controller,
       onChanged: onChanged,
       focusNode: focusNode,

@@ -15,32 +15,36 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style:
-          ElevatedButton.styleFrom(
-            backgroundColor: LibraColors.accentTeal,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ).copyWith(
-            foregroundColor: WidgetStateProperty.all(LibraColors.primaryText),
-          ),
-      onPressed: isLoading ? null : onPressed,
-      child: isLoading
-          ? const SizedBox(
-              height: 24,
-              width: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white, // Consider using a theme color here
-                strokeWidth: 2,
+    return Semantics(
+      label: '${text.toLowerCase().replaceAll(' ', '_')}_button',
+      button: true, // Indicate that this is a button for accessibility
+      child: ElevatedButton(
+        style:
+            ElevatedButton.styleFrom(
+              backgroundColor: LibraColors.accentTeal,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-            )
-          : Text(text),
+              textStyle: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ).copyWith(
+              foregroundColor: WidgetStateProperty.all(LibraColors.primaryText),
+            ),
+        onPressed: isLoading ? null : onPressed,
+        child: isLoading
+            ? const SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.white, // Consider using a theme color here
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(text),
+      ),
     );
   }
 }

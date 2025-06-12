@@ -1,8 +1,8 @@
-# 1.0.0 (2025-06-05)
-
+# [2.0.0-dev](https://github.com/FTX-Aseca/libra-ui/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2025-06-12)
 
 ### Bug Fixes
 
+* **appium:** Solve merge conflicts ([4d4ed2e](https://github.com/FTX-Aseca/libra-ui/commit/4d4ed2ee58f47dbdb444aa1d263be66a7d8a5cae))
 * **auth:** Fixed register method on AuthDatasourceImpl ([a43e3ff](https://github.com/FTX-Aseca/libra-ui/commit/a43e3fffd83d4076b30e3259a3a6fd4b60cd919c))
 * **CD & Release:** Fixed APK and IPA fetching in Release and CD jobs ([d8b5f4e](https://github.com/FTX-Aseca/libra-ui/commit/d8b5f4e670a5cc8efe4310d6b043a11b2ab44a62))
 * **CD:** Fixed CD workflow to run semantic release after Android APK and iOS IPA are built ([3aa29d1](https://github.com/FTX-Aseca/libra-ui/commit/3aa29d12f021959a7eb3022ba51c718ff3f2b9d4)), closes [#2](https://github.com/FTX-Aseca/libra-ui/issues/2)
@@ -28,6 +28,8 @@
 
 ### Features
 
+* **config:** Set up Appium ([55ec4e6](https://github.com/FTX-Aseca/libra-ui/commit/55ec4e62e696da7c0cb54e5520eb4bf4d2ccd349))
+* **debin:** Fix Debin ([361ccce](https://github.com/FTX-Aseca/libra-ui/commit/361ccce8d4a835828aba4ec4220258494a96c535))
 * **balance:** Can now view current account balance in home screen. ([d0e5c1c](https://github.com/FTX-Aseca/libra-ui/commit/d0e5c1cf26771e5aab7ea1c03f65f5160ea10bfb))
 * **CI:** Added .gitmessage and git hooks ([0254f45](https://github.com/FTX-Aseca/libra-ui/commit/0254f452d83f65a7271bac0ce7913bff00296ea5))
 * **config:** Init project using clean architecture ([379e18d](https://github.com/FTX-Aseca/libra-ui/commit/379e18db3aba92f986b791c8a03a9d12141b5943))
