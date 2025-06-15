@@ -38,7 +38,7 @@ class _TransferLoadingViewState extends ConsumerState<TransferLoadingView> {
     try {
       if (widget.operationType == OperationType.transfer) {
         final transfer = Transfer(
-          toIdentifier: widget.dest,
+          fromIdentifier: widget.dest,
           identifierType: widget.isAlias
               ? IdentifierType.alias
               : IdentifierType.cvu,

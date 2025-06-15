@@ -25,7 +25,6 @@ class _TransferScreenState extends ConsumerState<TransferView> {
   static const List<OperationType> _operationOptions = [
     OperationType.transfer,
     OperationType.debin,
-    OperationType.topUp,
   ];
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _destController = TextEditingController();
@@ -87,7 +86,7 @@ class _TransferScreenState extends ConsumerState<TransferView> {
     final operationTypeText = switch (_operationType) {
       OperationType.transfer => 'Transfer',
       OperationType.debin => 'Request DEBIN',
-      OperationType.topUp => 'Request Top-Up',
+      OperationType.topUp => '',
     };
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -113,7 +112,7 @@ class _TransferScreenState extends ConsumerState<TransferView> {
                 setState(() {
                   _operationType = _operationOptions[index];
                   _destController.clear();
-                  _isAlias = true;
+                  _isAlias = _operationType == OperationType.transfer;
                 });
               },
               borderRadius: BorderRadius.circular(8),
@@ -129,15 +128,10 @@ class _TransferScreenState extends ConsumerState<TransferView> {
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text('DEBIN'),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text('Top-Up'),
-                ),
               ],
             ),
             const SizedBox(height: 24),
-            if (_operationType == OperationType.transfer ||
-                _operationType == OperationType.debin) ...[
+            if (_operationType == OperationType.transfer) ...[
               ToggleButtons(
                 isSelected: [_isAlias, !_isAlias],
                 onPressed: (index) {
@@ -162,6 +156,9 @@ class _TransferScreenState extends ConsumerState<TransferView> {
                 ],
               ),
               const SizedBox(height: 16),
+            ],
+            if (_operationType == OperationType.transfer ||
+                _operationType == OperationType.debin) ...[
               LibraTextFormField(
                 semanticsFieldName: _isAlias ? 'alias' : 'cvu',
                 controller: _destController,
